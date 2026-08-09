@@ -1,3 +1,15 @@
+.mainContainer {
+  padding-bottom: 56px;
+}
+
+.stateMessage {
+  margin: 48px 0;
+  padding: 18px;
+  border-left: 3px solid #31966a;
+  background: rgba(49, 150, 106, .1);
+  color: inherit;
+}
+
 .container {
   display: flex;
   align-items: center;

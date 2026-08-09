@@ -27,7 +27,7 @@ export default async function Home() {
     <main className={styles.container}>
       <section className={styles.item}>
         <h1 className={styles.title}>Nature as My Muse, Notes as My Love Language, and Poetry for Soulful Laughter.</h1>
-        <p className={styles.desc}>Hi! I am 霖青 (Linqing), but you can just call me Cyan - inspired by 青, that lovely color between blue and green. Curious? Click the button below to learn more about me!</p>
+        <p className={styles.desc}>Hi! I am 霖青 (Linqing), but you can just call me Lin. 霖 means the lingering spring rain, and 青 is the lovely color between blue and green. Curious? Click the button below to learn more about me!</p>
         <Button url="/about" text="ABOUT &nbsp;   ME ~" />
       </section>
 

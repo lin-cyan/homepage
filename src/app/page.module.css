@@ -1,1 +1,165 @@
-.container{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);align-items:center;gap:96px;padding:56px 0}.item{display:flex;flex-direction:column;align-items:flex-start;gap:42px}.title{margin:0;font-size:56px;line-height:1.48;letter-spacing:0;background:linear-gradient(to bottom,#194c33,#bbb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.desc{margin:0;font-size:22px;font-weight:300;line-height:1.55}.quoteArea{display:flex;align-items:center;min-height:520px}.quoteLink,.quoteFallback{position:relative;display:flex;flex-direction:column;justify-content:center;width:100%;min-height:420px;padding:54px 28px 48px 64px;border-left:4px solid #31966a;color:inherit}.quoteLink{transition:opacity .7s ease,border-color .2s ease,transform .2s ease}.quoteVisible{opacity:1}.quoteHidden{opacity:0;pointer-events:none}.quoteLink:hover{border-color:#f4b942;transform:translateX(6px)}.quoteMark{position:absolute;top:14px;left:28px;color:#31966a;font-family:Georgia,serif;font-size:92px;line-height:1}.quoteArea blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:38px;line-height:1.5}.readMore{margin-top:34px;color:#31966a;font-size:14px;font-weight:700}.quoteLink:hover .readMore{color:#f4b942}@media(prefers-reduced-motion:reduce){.quoteLink{transition:none}}@media(max-width:900px){.container{grid-template-columns:1fr;gap:40px;padding:36px 0}.quoteArea{min-height:auto}.quoteLink,.quoteFallback{min-height:300px}.title{font-size:44px}}@media(max-width:600px){.container{padding:24px 10px}.item{gap:28px}.title{font-size:36px;line-height:1.35}.desc{font-size:18px}.quoteLink,.quoteFallback{min-height:260px;padding:58px 20px 36px 36px}.quoteMark{left:14px}.quoteArea blockquote{font-size:28px}}
+.container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+    align-items: center;
+    gap: 96px;
+    padding: 56px 0
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 42px
+}
+
+.title {
+    margin: 0;
+    font-size: 56px;
+    line-height: 1.48;
+    letter-spacing: 0;
+    background: linear-gradient(to bottom, #194c33, #bbb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+}
+
+.desc {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.55
+}
+
+.quoteArea {
+    display: flex;
+    align-items: center;
+    min-height: 520px
+}
+
+.quoteLink,
+.quoteFallback {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 420px;
+    padding: 54px 28px 48px 64px;
+    border-left: 4px solid #31966a;
+    color: inherit
+}
+
+.quoteLink {
+    transition: opacity .7s ease, border-color .2s ease, transform .2s ease
+}
+
+.quoteVisible {
+    opacity: 1
+}
+
+.quoteHidden {
+    opacity: 0;
+    pointer-events: none
+}
+
+.quoteLink:hover {
+    border-color: #f4b942;
+    transform: translateX(6px)
+}
+
+.quoteMark {
+    position: absolute;
+    top: 14px;
+    left: 28px;
+    color: #31966a;
+    font-family: Georgia, serif;
+    font-size: 92px;
+    line-height: 1
+}
+
+.quoteArea blockquote {
+    display: -webkit-box;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 38px;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4
+}
+
+.readMore {
+    margin-top: 34px;
+    color: #31966a;
+    font-size: 14px;
+    font-weight: 700
+}
+
+.quoteLink:hover .readMore {
+    color: #f4b942
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .quoteLink {
+        transition: none
+    }
+}
+
+@media(max-width:900px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 36px 0
+    }
+
+    .quoteArea {
+        min-height: auto
+    }
+
+    .quoteLink,
+    .quoteFallback {
+        height: 300px
+    }
+
+    .quoteArea blockquote {
+        -webkit-line-clamp: 2
+    }
+
+    .title {
+        font-size: 44px
+    }
+}
+
+@media(max-width:600px) {
+    .container {
+        padding: 24px 10px
+    }
+
+    .item {
+        gap: 28px
+    }
+
+    .title {
+        font-size: 36px;
+        line-height: 1.35
+    }
+
+    .desc {
+        font-size: 18px
+    }
+
+    .quoteLink,
+    .quoteFallback {
+        height: 260px;
+        padding: 58px 20px 36px 36px
+    }
+
+    .quoteMark {
+        left: 14px
+    }
+
+    .quoteArea blockquote {
+        font-size: 28px
+    }
+}

@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import PostImage from "@/components/PostImage/PostImage";
+import Pagination from "@/components/Pagination/Pagination";
 import styles from "./page.module.css";
 
-export default function BlogClient({ data, error = "" }) {
+export default function BlogClient({ data, pagination, error = "" }) {
   const posts = Array.isArray(data) ? data : [];
 
   return (
@@ -40,6 +41,14 @@ export default function BlogClient({ data, error = "" }) {
           <Link key={item._id} href={`/blog/${item._id}`} className={styles.container}>{content}</Link>
         );
       })}
+      {!error && (
+        <Pagination
+          currentPage={pagination?.page}
+          totalPages={pagination?.totalPages}
+          basePath="/blog"
+          ariaLabel="Blog pages"
+        />
+      )}
     </main>
   );
 }

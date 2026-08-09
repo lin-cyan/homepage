@@ -9,8 +9,13 @@ export const GET = async (request) => {
   const username = url.searchParams.get("username");
   const visibleOnly = url.searchParams.get("visible") === "true";
   const quotesOnly = url.searchParams.get("quote") === "true";
+  const paginated = url.searchParams.has("page");
+  const requestedPage = Number.parseInt(url.searchParams.get("page"), 10);
+  const page = Number.isFinite(requestedPage) ? Math.max(requestedPage, 1) : 1;
   const requestedLimit = Number.parseInt(url.searchParams.get("limit"), 10);
-  const limit = Number.isFinite(requestedLimit) ? Math.min(Math.max(requestedLimit, 1), 100) : 0;
+  const limit = Number.isFinite(requestedLimit)
+    ? Math.min(Math.max(requestedLimit, 1), 100)
+    : paginated ? 10 : 0;
 
   try {
     await connect();
@@ -20,7 +25,30 @@ export const GET = async (request) => {
     if (visibleOnly) filters.showInBlog = { $ne: false };
     if (quotesOnly) filters.isQuote = true;
 
-    const query = Post.find(filters).sort(quotesOnly ? { updatedAt: -1 } : { createdAt: -1 });
+    const sort = quotesOnly ? { updatedAt: -1 } : { createdAt: -1 };
+
+    if (paginated) {
+      const total = await Post.countDocuments(filters);
+      const totalPages = Math.max(1, Math.ceil(total / limit));
+      const currentPage = Math.min(page, totalPages);
+      const posts = await Post.find(filters)
+        .sort(sort)
+        .skip((currentPage - 1) * limit)
+        .limit(limit)
+        .lean();
+
+      return NextResponse.json({
+        posts,
+        pagination: {
+          page: currentPage,
+          pageSize: limit,
+          total,
+          totalPages,
+        },
+      });
+    }
+
+    const query = Post.find(filters).sort(sort);
     if (limit) query.limit(limit);
     const posts = await query.lean();
     return NextResponse.json(posts);
