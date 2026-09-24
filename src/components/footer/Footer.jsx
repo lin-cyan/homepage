@@ -21,10 +21,10 @@ const Footer = () =>{
                     <Image src="/icon_resume.png"  width={30} height={30} className={styles.icon} alt="Lama Dev" />
                     </a>
 
-                    <a href="https://www.linkedin.com/in/linqingcyanli">
+                    {/* <a href="https://www.linkedin.com/in/linqingcyanli">
                     <Image src="/icon_linkedin.png"  width={30} height={30} className={styles.icon} alt="Lama Dev" />
-                    </a>
-                    <a href="">
+                    </a> */}
+                    <a href="https://www.instagram.com/lin013120/">
                     <Image src="/2.png"  width={30} height={30} className={styles.icon} alt="Lama Dev" />
                     </a>
                 </div>

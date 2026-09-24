@@ -1,0 +1,95 @@
+[
+  {
+    "id": 1,
+    "title": "FFT based water simulation",
+    "desc": "FFT-based ocean simulation, volumetric moving clouds, physically inspired atmospheric scattering, dynamic sunrise-to-night transitions",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790222730/2_mwabrn.png",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790222662/Screenshot_2026-09-23_230323_xjf9ei.png"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Hale Scanner",
+    "desc": "Make a software for better visualize the data from rader scan in factory",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790222876/image-2_gxoabg.png",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790222876/image-3_fmmlpj.png",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790222876/image_mbbkbj.png"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Sand on the Beach Simulation",
+    "desc": "I project just want to understand the particle. A GPU accelerated 3D SPH simulation, built with Taichi, of water waves running up.",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790279676/image3_ux0jjh.png"]
+  },
+  {
+    "id": 4,
+    "title": "Awesome Gallery",
+    "desc": "A web application for cloud storage. Onboarded and configured Google Map APIs for drawing routes that connect multiple history points.",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969583/project-related/Screenshot_2024-04-12_175243_ftg6le.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969282/project-related/Screenshot_2024-04-12_174726_y3zcyd.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969622/project-related/Screenshot_2024-04-12_175329_q8cein.jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Task Manager",
+    "desc": "Engineered a dedicated schedule manager for individual and group users. Leveraging Next.js 14, integrating features like authentication, workspace management, and board functionalities, employing technologies such as React and MySQL.",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969901/project-related/Screenshot_2024-04-12_175803_pdguyc.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969904/project-related/Screenshot_2024-04-12_175748_j2yp2w.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Photo Server",
+    "desc": "A cloud photo server based on AWS S3, .",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969751/project-related/Screenshot_2024-04-12_175445_waxsob.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1712969801/project-related/Screenshot_2024-04-12_175630_xbn0q8.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "GasMaster",
+    "desc": "A mobile app that improves the gas-station searching experience.Route planning function that allows drivers to get gas on their way to a certain destination. There are a few apps that help drivers find gas nearby, but very few of them are combined with route planning.",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665191/project-related/https_lh5.googleusercontent.commu0laaAfikONjKbxDSSJ_j7RWQasA0p04nG1rHn53rNW-e5-PwuF8wTWyIsKuHK2n5LHuXX5hJVo1B6LHLrTpX2L6eSligKqn8ZQQeN-sH4NUNHgZLq5p__i9HFUtMsXAp2tDgpt_yf8amp.png",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665243/project-related/https_lh4.googleusercontent.com1CbsIRtEv387Hn8zw_jCTX7BX1C9kbtVVvs3iuueGleXGZknanTA8KP_b74G3qAsOsd56IoVzbx-FMazkR2Gnv-1ewksxTLEKY1vfr3jFp2Ol8jsRL-Cr36-xLqNKdICKpHyJqDWEX8_pzd93z.png",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665243/project-related/cQMsaT2y-oYZcrLmH7RvKQH-jlybmrRDmStjpc32nwhUjQ2lBATlydX4ZsMfH8A8yBk3vYwcDwS03phICZLyiidzQgs526LhQ12tWPaS2oMIxwamJpN2WlOQSIQaGR7IRAeimYuU_yw6wer.png"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Google Plugin",
+    "desc": "The tiny real-time HTTP Request analysis system",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665452/project-related/arch_itgrjr.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665438/project-related/Screenshot_2023-12-15_103632_qcfzqa.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665437/project-related/Screenshot_2023-12-15_103648_zn8cwh.jpg",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1702665436/project-related/Screenshot_2023-12-15_103658_eq3pkd.jpg"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Undergraduate Final Project",
+    "desc": "Physics based real time rendering engine",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790267982/image2_tqp5q8.png",
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790267982/image1_wypsaj.png"
+    ]
+  }
+]
