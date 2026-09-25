@@ -20,16 +20,27 @@
       "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790222876/image_mbbkbj.png"
     ]
   },
-  {
+      {
     "id": 3,
+    "title": "MLS-MPM Water Simulation",
+    "desc": "The water runs on the GPU using MLS-MPM, where particles carry the fluid and a grid handles the forces. In each step, particles pass their mass and momentum to the grid, and each particle works out its density from the grid. Pressure and viscosity come from that density. The grid then adds gravity and stops water at the walls, and particles pick up the new velocities and move. The result is drawn as a smooth water surface",
+    "link": "/portfolio",
+    "image": [
+      "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790347319/1_k8rh51.png",
+    "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790347319/2_clylns.png",
+  "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790347319/3_z9vsvl.png"]
+  },
+  {
+    "id": 4,
     "title": "Sand on the Beach Simulation",
     "desc": "I project just want to understand the particle. A GPU accelerated 3D SPH simulation, built with Taichi, of water waves running up.",
     "link": "/portfolio",
     "image": [
       "https://res.cloudinary.com/dnqh8wkdj/image/upload/v1790279676/image3_ux0jjh.png"]
   },
+
   {
-    "id": 4,
+    "id": 5,
     "title": "Awesome Gallery",
     "desc": "A web application for cloud storage. Onboarded and configured Google Map APIs for drawing routes that connect multiple history points.",
     "link": "/portfolio",
@@ -40,7 +51,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": 6,
     "title": "Task Manager",
     "desc": "Engineered a dedicated schedule manager for individual and group users. Leveraging Next.js 14, integrating features like authentication, workspace management, and board functionalities, employing technologies such as React and MySQL.",
     "link": "/portfolio",
@@ -50,7 +61,7 @@
     ]
   },
   {
-    "id": 6,
+    "id": 7,
     "title": "Photo Server",
     "desc": "A cloud photo server based on AWS S3, .",
     "link": "/portfolio",
@@ -60,7 +71,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": 8,
     "title": "GasMaster",
     "desc": "A mobile app that improves the gas-station searching experience.Route planning function that allows drivers to get gas on their way to a certain destination. There are a few apps that help drivers find gas nearby, but very few of them are combined with route planning.",
     "link": "/portfolio",
@@ -71,7 +82,7 @@
     ]
   },
   {
-    "id": 8,
+    "id": 9,
     "title": "Google Plugin",
     "desc": "The tiny real-time HTTP Request analysis system",
     "link": "/portfolio",
@@ -83,7 +94,7 @@
     ]
   },
   {
-    "id": 9,
+    "id": 10,
     "title": "Undergraduate Final Project",
     "desc": "Physics based real time rendering engine",
     "link": "/portfolio",
