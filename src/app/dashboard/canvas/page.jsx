@@ -111,6 +111,26 @@ export default function CanvasEditor() {
     return () => { document.body.style.overflow = previous; };
   }, []);
 
+  // iPad Safari 的长按 / 双击会触发文字选择、放大镜和双击缩放，CSS 拦不全，
+  // 编辑模式下在画布上阻止原生触摸手势（Pointer Events 不受影响）
+  useEffect(() => {
+    const canvas = liveRef.current;
+    if (!canvas || mode !== "edit") return undefined;
+    const block = (event) => event.preventDefault();
+    canvas.addEventListener("touchstart", block, { passive: false });
+    canvas.addEventListener("touchmove", block, { passive: false });
+    return () => {
+      canvas.removeEventListener("touchstart", block);
+      canvas.removeEventListener("touchmove", block);
+    };
+  }, [mode, layout]);
+
+  useEffect(() => {
+    const block = (event) => event.preventDefault();
+    document.addEventListener("selectstart", block);
+    return () => document.removeEventListener("selectstart", block);
+  }, []);
+
   const pageHeight = canvasData?.pageHeight;
 
   // 纸张宽度：撑满可用宽度，但保证单页能完整显示在屏幕内；多页时上下滚动
