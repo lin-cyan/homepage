@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connect from "@/utils/db";
 import Post from "@/models/Post";
+import { preparePostBody } from "@/utils/postBody";
 
 export const GET = async (request) => {
   const url = new URL(request.url);
@@ -35,6 +36,7 @@ export const GET = async (request) => {
         .sort(sort)
         .skip((currentPage - 1) * limit)
         .limit(limit)
+        .select("-canvasData")
         .lean();
 
       return NextResponse.json({
@@ -48,7 +50,7 @@ export const GET = async (request) => {
       });
     }
 
-    const query = Post.find(filters).sort(sort);
+    const query = Post.find(filters).sort(sort).select("-canvasData");
     if (limit) query.limit(limit);
     const posts = await query.lean();
     return NextResponse.json(posts);
@@ -65,8 +67,8 @@ export const GET = async (request) => {
 };
 export const POST = async (request) => {
   const body = await request.json();
-  const newPost = new Post(body);
   try {
+    const newPost = new Post(preparePostBody(body, Boolean(body.isCanvas)));
     await connect();
 
     await newPost.save();

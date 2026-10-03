@@ -21,9 +21,18 @@ const postSchema = new Schema(
       require: false,
     },
     
+    // 画布文章的 content 为空，必填校验放在 API 层（update validator 里拿不到 isCanvas）
     content: {
       type: String,
-      required: true,
+      default: "",
+    },
+    isCanvas: {
+      type: Boolean,
+      default: false,
+    },
+    canvasData: {
+      type: Schema.Types.Mixed,
+      default: undefined,
     },
     username: {
       type: String,

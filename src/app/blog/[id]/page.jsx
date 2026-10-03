@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import PostImage from "@/components/PostImage/PostImage";
+import CanvasView from "@/components/CanvasView/CanvasView";
 import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
 import {marked}  from "marked";
@@ -91,7 +92,11 @@ const BlogPost = async ({ params }) => {
       </div>
       <div className={styles.content}>
         {/* <p className={styles.text}> */}
-          <div dangerouslySetInnerHTML={{__html: marked(data.content)}} />
+          {data.isCanvas ? (
+            <CanvasView data={data.canvasData} title={data.title} className={styles.canvas} />
+          ) : (
+            <div dangerouslySetInnerHTML={{__html: marked(data.content)}} />
+          )}
          {/* {data.content} */}
       </div>
     </div>

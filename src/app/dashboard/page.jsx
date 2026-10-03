@@ -6,6 +6,9 @@ import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { marked } from "marked";
 import PostImage from "@/components/PostImage/PostImage";
+import CanvasView from "@/components/CanvasView/CanvasView";
+import { ASPECT_RATIOS, createCanvasData, findAspectRatio, normalizeCanvasData } from "@/utils/canvas";
+import { clearCanvasDraft, loadCanvasDraft, saveCanvasDraft } from "@/utils/canvasDraft";
 import styles from "./page.module.css";
 
 const EMPTY_POST = {
@@ -16,6 +19,8 @@ const EMPTY_POST = {
   externalArticle: false,
   showInBlog: true,
   isQuote: false,
+  isCanvas: false,
+  canvasData: null,
   content: "",
 };
 
@@ -35,10 +40,21 @@ export default function Dashboard() {
   const [message, setMessage] = useState("");
   const [showPreview, setShowPreview] = useState(false);
   const [tagQuery, setTagQuery] = useState("");
+  const [loadingCanvas, setLoadingCanvas] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") router.replace("/dashboard/login");
   }, [router, status]);
+
+  // 从全屏画板返回时恢复表单
+  useEffect(() => {
+    const draft = loadCanvasDraft();
+    if (!draft?.formData) return;
+    clearCanvasDraft();
+    setFormData({ ...EMPTY_POST, ...draft.formData });
+    setEditingId(draft.editingId || null);
+    if (draft.canvasUpdated) setMessage("画布已更新，点击保存后才会上传。");
+  }, []);
 
   const username = session?.user?.name;
   const { data: posts = [], mutate, error, isLoading } = useSWR(
@@ -74,6 +90,31 @@ export default function Dashboard() {
     }));
   }
 
+  function toggleCanvas(event) {
+    const { checked } = event.target;
+    setFormData((current) => ({
+      ...current,
+      isCanvas: checked,
+      externalArticle: checked ? false : current.externalArticle,
+      canvasData: checked ? current.canvasData || createCanvasData() : current.canvasData,
+    }));
+    setShowPreview(false);
+  }
+
+  function changeAspectRatio(event) {
+    const ratio = ASPECT_RATIOS.find((item) => item.label === event.target.value);
+    if (!ratio) return;
+    setFormData((current) => ({ ...current, canvasData: createCanvasData(ratio.value) }));
+  }
+
+  function openCanvasEditor() {
+    if (!saveCanvasDraft({ formData, editingId })) {
+      setMessage("无法打开画板：浏览器存储不可用。");
+      return;
+    }
+    router.push("/dashboard/canvas");
+  }
+
   function startCreate() {
     setEditingId(null);
     setFormData(EMPTY_POST);
@@ -81,7 +122,7 @@ export default function Dashboard() {
     setShowPreview(false);
   }
 
-  function startEdit(post) {
+  async function startEdit(post) {
     setEditingId(post._id);
     setFormData({
       title: post.title || "",
@@ -91,14 +132,35 @@ export default function Dashboard() {
       externalArticle: Boolean(post.externalArticle),
       showInBlog: post.showInBlog !== false,
       isQuote: Boolean(post.isQuote),
+      isCanvas: Boolean(post.isCanvas),
+      canvasData: null,
       content: post.content || "",
     });
     setMessage("");
+    setShowPreview(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!post.isCanvas) return;
+
+    // 列表接口不返回画布数据，单独拉取
+    setLoadingCanvas(true);
+    try {
+      const response = await fetch(`/api/posts/${post._id}`);
+      if (!response.ok) throw new Error();
+      const fullPost = await response.json();
+      setFormData((current) => ({ ...current, canvasData: normalizeCanvasData(fullPost.canvasData) }));
+    } catch {
+      setMessage("画布数据加载失败，请重试。");
+    } finally {
+      setLoadingCanvas(false);
+    }
   }
 
   async function savePost(event) {
     event.preventDefault();
+    if (formData.isCanvas && !formData.canvasData?.strokes?.length) {
+      setMessage("画布还是空的，请先打开画板绘制。");
+      return;
+    }
     setSaving(true);
     setMessage("");
     const url = editingId ? `/api/posts/${editingId}` : "/api/posts";
@@ -161,9 +223,15 @@ export default function Dashboard() {
             <label>标签<input name="tag" value={formData.tag} onChange={changeField} /></label>
           </div>
           <label className={styles.checkbox}>
-            <input type="checkbox" name="externalArticle" checked={formData.externalArticle} onChange={changeField} />
-            外部文章（内容填写跳转链接）
+            <input type="checkbox" name="isCanvas" checked={formData.isCanvas} onChange={toggleCanvas} disabled={Boolean(editingId)} />
+            画布文章（手绘内容{editingId ? "，创建后不可更改" : ""}）
           </label>
+          {!formData.isCanvas && (
+            <label className={styles.checkbox}>
+              <input type="checkbox" name="externalArticle" checked={formData.externalArticle} onChange={changeField} />
+              外部文章（内容填写跳转链接）
+            </label>
+          )}
           <label className={styles.checkbox}>
             <input type="checkbox" name="showInBlog" checked={formData.showInBlog} onChange={changeField} />
             在 Blogs 页面展示
@@ -172,16 +240,42 @@ export default function Dashboard() {
             <input type="checkbox" name="isQuote" checked={formData.isQuote} onChange={changeField} />
             作为首页 Quote 展示
           </label>
-          <label>{formData.externalArticle ? "外部文章链接" : "Markdown 内容"}
-            <textarea name="content" value={formData.content} onChange={changeField} rows="16" required />
-          </label>
+          {formData.isCanvas ? (
+            <div className={styles.canvasField}>
+              <div className={styles.canvasHeader}>
+                <span>画布内容</span>
+                <select
+                  aria-label="画布比例"
+                  value={findAspectRatio(normalizeCanvasData(formData.canvasData).pageHeight)?.label ?? ""}
+                  onChange={changeAspectRatio}
+                  disabled={!formData.canvasData || formData.canvasData.strokes.length > 0}
+                  title={formData.canvasData?.strokes.length ? "已有笔画，比例不可更改" : "选择单页比例，之后可在画板中加长"}
+                >
+                  {ASPECT_RATIOS.map((ratio) => <option key={ratio.label} value={ratio.label}>{ratio.label}</option>)}
+                </select>
+              </div>
+              {loadingCanvas || !formData.canvasData ? (
+                <p className={styles.status}>正在加载画布...</p>
+              ) : (
+                <button type="button" className={styles.canvasPreview} onClick={openCanvasEditor} aria-label="打开全屏画板">
+                  <CanvasView data={formData.canvasData} title={formData.title || "画布预览"} />
+                  {!formData.canvasData.strokes.length && <span className={styles.canvasHint}>空白画布，点击开始绘制</span>}
+                </button>
+              )}
+            </div>
+          ) : (
+            <label>{formData.externalArticle ? "外部文章链接" : "Markdown 内容"}
+              <textarea name="content" value={formData.content} onChange={changeField} rows="16" required />
+            </label>
+          )}
           <div className={styles.actions}>
-            {!formData.externalArticle && <button type="button" className={styles.secondaryButton} onClick={() => setShowPreview((value) => !value)}>{showPreview ? "关闭预览" : "预览"}</button>}
+            {formData.isCanvas && <button type="button" className={styles.secondaryButton} disabled={loadingCanvas || !formData.canvasData} onClick={openCanvasEditor}>打开画板</button>}
+            {!formData.externalArticle && !formData.isCanvas && <button type="button" className={styles.secondaryButton} onClick={() => setShowPreview((value) => !value)}>{showPreview ? "关闭预览" : "预览"}</button>}
             <button className={styles.primaryButton} disabled={saving}>{saving ? "保存中..." : editingId ? "保存修改" : "发布文章"}</button>
           </div>
           {message && <p className={styles.message} role="status">{message}</p>}
         </form>
-        {showPreview && !formData.externalArticle && <iframe title="Markdown 预览" className={styles.preview} sandbox="" srcDoc={previewDocument} />}
+        {showPreview && !formData.externalArticle && !formData.isCanvas && <iframe title="Markdown 预览" className={styles.preview} sandbox="" srcDoc={previewDocument} />}
       </section>
 
       <section className={styles.library} aria-labelledby="library-title">
@@ -210,7 +304,7 @@ export default function Dashboard() {
               <div className={styles.postInfo}>
                 <h3>{post.title}</h3>
                 <p>
-                  {post.tag || "未分类"} · {post.showInBlog === false ? "Blogs 已隐藏" : "Blogs 展示中"}
+                  {post.tag || "未分类"}{post.isCanvas ? " · 画布" : ""} · {post.showInBlog === false ? "Blogs 已隐藏" : "Blogs 展示中"}
                   {post.isQuote ? " · 首页 Quote" : ""}
                 </p>
               </div>
